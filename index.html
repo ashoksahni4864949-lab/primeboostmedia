@@ -82,15 +82,15 @@
 
         .glass-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(59, 130, 246, 0.5);
-            box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.3);
+            border-color: rgba(59, 130, 246, 1) !important;
+            box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.8), inset 0 0 20px rgba(59, 130, 246, 0.4) !important;
         }
 
         /* Dynamic Scroll Reveal Animations */
-        .reveal-up { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        .reveal-left { opacity: 0; transform: translateX(-50px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        .reveal-right { opacity: 0; transform: translateX(50px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        .reveal-scale { opacity: 0; transform: scale(0.8); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal-up { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1) var(--delay, 0ms), transform 0.8s cubic-bezier(0.5, 0, 0, 1) var(--delay, 0ms); }
+        .reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1) var(--delay, 0ms), transform 0.8s cubic-bezier(0.5, 0, 0, 1) var(--delay, 0ms); }
+        .reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1) var(--delay, 0ms), transform 0.8s cubic-bezier(0.5, 0, 0, 1) var(--delay, 0ms); }
+        .reveal-scale { opacity: 0; transform: scale(0.8); transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1) var(--delay, 0ms), transform 0.8s cubic-bezier(0.5, 0, 0, 1) var(--delay, 0ms); }
         
         .reveal-up.active, .reveal-left.active, .reveal-right.active, .reveal-scale.active {
             opacity: 1;
@@ -164,7 +164,7 @@
                 pointer-events: none;
                 z-index: 9999999; 
                 mix-blend-mode: difference; 
-                transition: width 0.2s, height 0.2s;
+                transition: width 0.1s, height 0.1s; /* Ultra fast transition */
             }
             #cursor-ring {
                 position: fixed;
@@ -179,9 +179,9 @@
                 pointer-events: none;
                 z-index: 9999998; 
                 box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
-                transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                            height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                            background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+                transition: width 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                            height 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                            background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
                 will-change: transform;
             }
             #cursor-ring.hovered {
@@ -402,40 +402,40 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative pt-32 pb-20 lg:pt-56 lg:pb-32 overflow-hidden min-h-screen flex items-center">
+    <section id="home" class="relative pt-24 pb-12 lg:pt-56 lg:pb-32 overflow-hidden min-h-screen flex items-center">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center z-10 w-full">
-            <div class="reveal-up inline-flex items-center gap-2 px-5 py-2 rounded-full glass-panel border-white/10 text-sm font-medium text-blue-400 mb-8 mx-auto backdrop-blur-xl">
+            <div class="reveal-up inline-flex items-center gap-2 px-4 py-1.5 lg:px-5 lg:py-2 rounded-full glass-panel border-white/10 text-xs lg:text-sm font-medium text-blue-400 mb-6 mx-auto backdrop-blur-xl">
                 <span class="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_#3b82f6]"></span>
                 World's No.1 Premium Ad Strategy
             </div>
-            <h1 class="reveal-up text-5xl md:text-7xl lg:text-8xl font-extrabold text-white tracking-tight mb-6 leading-tight drop-shadow-2xl" style="transition-delay: 100ms;">
+            <h1 class="reveal-up text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-white tracking-tight mb-4 lg:mb-6 leading-tight drop-shadow-2xl" style="--delay: 100ms;">
                 Scale your brand with <br class="hidden md:block" />
                 <span class="gradient-text">dynamic data.</span>
             </h1>
-            <p class="reveal-up mt-6 max-w-2xl mx-auto text-xl text-slate-300 mb-12 font-light" style="transition-delay: 200ms;">
+            <p class="reveal-up mt-4 max-w-2xl mx-auto text-lg lg:text-xl text-slate-300 mb-8 lg:mb-12 font-light px-2" style="--delay: 200ms;">
                 Stop guessing with your ad budget. Partner with an elite agency that has proven experience in delivering unprecedented ROI.
             </p>
-            <div class="reveal-up flex flex-col sm:flex-row justify-center gap-6" style="transition-delay: 300ms;">
-                <button onclick="openWaModal()" class="btn-premium inline-flex items-center justify-center px-10 py-5 font-extrabold text-white text-xl tracking-wide group z-10">
+            <div class="reveal-up flex flex-col sm:flex-row justify-center gap-4 lg:gap-6" style="--delay: 300ms;">
+                <button onclick="openWaModal()" class="btn-premium inline-flex items-center justify-center px-8 py-4 lg:px-10 lg:py-5 font-extrabold text-white text-lg lg:text-xl tracking-wide group z-10">
                     <span class="relative z-10 flex items-center">
-                        <i class="fa-brands fa-whatsapp mr-3 text-green-400 group-hover:text-white transition-colors text-2xl"></i>
+                        <i class="fa-brands fa-whatsapp mr-2 lg:mr-3 text-green-400 group-hover:text-white transition-colors text-xl lg:text-2xl"></i>
                         WhatsApp Us 
-                        <i class="fa-solid fa-arrow-right ml-3 arrow-bounce text-blue-400 group-hover:text-white transition-colors"></i>
+                        <i class="fa-solid fa-arrow-right ml-2 lg:ml-3 arrow-bounce text-blue-400 group-hover:text-white transition-colors"></i>
                     </span>
                 </button>
             </div>
 
             <!-- Stats Row -->
-            <div id="stats-section" class="mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                <div class="glass-card p-6 rounded-2xl reveal-up" style="transition-delay: 400ms;">
+            <div id="stats-section" class="mt-12 lg:mt-24 grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 max-w-4xl mx-auto">
+                <div class="glass-card p-6 rounded-2xl reveal-up" style="--delay: 400ms;">
                     <h3 class="text-4xl lg:text-5xl font-bold text-white mb-2"><span class="stat-counter" data-target="7">0</span>+</h3>
                     <p class="text-blue-400 font-medium">Years of Mastery</p>
                 </div>
-                <div class="glass-card p-6 rounded-2xl reveal-up" style="transition-delay: 500ms;">
+                <div class="glass-card p-6 rounded-2xl reveal-up" style="--delay: 500ms;">
                     <h3 class="text-4xl lg:text-5xl font-bold text-white mb-2">₹<span class="stat-counter" data-target="1">0</span> Cr+</h3>
                     <p class="text-purple-400 font-medium">Ad Spend Managed</p>
                 </div>
-                <div class="glass-card p-6 rounded-2xl reveal-up" style="transition-delay: 600ms;">
+                <div class="glass-card p-6 rounded-2xl reveal-up" style="--delay: 600ms;">
                     <h3 class="text-4xl lg:text-5xl font-bold text-white mb-2"><span class="stat-counter" data-target="100">0</span>%</h3>
                     <p class="text-green-400 font-medium">ROI Focused</p>
                 </div>
@@ -525,7 +525,7 @@
                 </div>
 
                 <!-- Google Ads -->
-                <div class="glass-card p-10 rounded-3xl group reveal-scale relative overflow-hidden" style="transition-delay: 150ms;">
+                <div class="glass-card p-10 rounded-3xl group reveal-scale relative overflow-hidden" style="--delay: 150ms;">
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-red-500/20 rounded-full blur-3xl group-hover:bg-red-500/40 transition-colors duration-500"></div>
                     <div class="w-20 h-20 bg-gradient-to-br from-red-500 to-red-800 rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-red-500/30 group-hover:scale-110 transition-transform duration-300 float-anim-delay">
                         <i class="fa-brands fa-google text-4xl text-white"></i>
@@ -630,6 +630,7 @@
     <script>
         // --- High-Intent WhatsApp Modal Logic ---
         function openWaModal() {
+            document.body.style.overflow = 'hidden'; // FIX: Background scroll lock jab modal open ho
             const modal = document.getElementById('waModal');
             const content = document.getElementById('waModalContent');
             modal.classList.remove('hidden');
@@ -641,6 +642,7 @@
         }
 
         function closeWaModal() {
+            document.body.style.overflow = ''; // FIX: Scroll wapas open karna jab modal close ho
             const modal = document.getElementById('waModal');
             const content = document.getElementById('waModalContent');
             modal.classList.add('opacity-0');
@@ -654,25 +656,25 @@
         document.getElementById('waVerifyForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('waName').value;
-            
-            // ==========================================
-            // FIRE META/GOOGLE PIXEL HERE!
             console.log("High Intent Lead Verified! Firing Conversion Pixel...");
-            // ==========================================
-
             const message = encodeURIComponent(`Hi Primeboostmedia, I am ${name}. I would like to scale my business.`);
             window.open(`https://wa.me/919729936623?text=${message}`, '_blank');
             closeWaModal();
             this.reset();
         });
 
-        // --- 1. Mobile Menu Toggle ---
+        // --- 1. Mobile Menu Toggle (BUG FIXED) ---
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
         btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-        menu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => menu.classList.add('hidden'));
+        
+        // Fix: Select both 'a' tags and 'button' so the menu closes on ANY click
+        menu.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('click', () => menu.classList.add('hidden'));
         });
+
+        // --- PRELOADER & SCROLL REVEAL LOGIC ---
+        document.body.style.overflow = 'hidden'; 
 
         // --- PRELOADER & SCROLL REVEAL LOGIC ---
         document.body.style.overflow = 'hidden'; // Lock scroll
@@ -687,6 +689,8 @@
             });
         }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
+        let is3DActive = false; // 3D Sleep Mode Flag
+
         // Cinematic 60FPS Preloader Animation
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
@@ -694,7 +698,7 @@
             const percentageText = document.getElementById('loader-percentage-text');
             
             let startTime = null;
-            const duration = 1400; // 1.4s
+            const duration = 1200; // Fast 1.2s
             
             const easeOutQuart = (t) => 1 - (--t) * t * t * t;
 
@@ -717,6 +721,12 @@
                         preloader.classList.add('loaded');
                         document.body.style.overflow = ''; // Release scroll
                         
+                        // Wake up 3D Engine right as preloader fades out
+                        if (!is3DActive) {
+                            is3DActive = true;
+                            animate(); 
+                        }
+
                         setTimeout(() => {
                             revealElements.forEach(el => revealObserver.observe(el));
                         }, 300); 
@@ -777,25 +787,28 @@
 
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        // FIX: Force 1x pixel ratio on mobile for ultra-smooth rendering, 1.5x max on desktop
+        renderer.setPixelRatio(window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio, 1.5)); 
         container.appendChild(renderer.domElement);
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
         
-        const pointLight1 = new THREE.PointLight(0x3b82f6, 2, 100);
+        const pointLight1 = new THREE.PointLight(0x3b82f6, 1.5, 100);
         pointLight1.position.set(20, 20, 20);
         scene.add(pointLight1);
         
-        const pointLight2 = new THREE.PointLight(0x8b5cf6, 2, 100);
+        const pointLight2 = new THREE.PointLight(0x8b5cf6, 1.5, 100);
         pointLight2.position.set(-20, -20, 20);
         scene.add(pointLight2);
 
         const group = new THREE.Group();
         scene.add(group);
 
-        const geoDisc = new THREE.CylinderGeometry(1, 1, 0.05, 64);
+        // Restored High-Quality Geometry
+        const geoDisc = new THREE.CylinderGeometry(1, 1, 0.05, 64); 
 
+        // Restored Ultra-Premium Real Glass Material
         const matGlassBlue = new THREE.MeshPhysicalMaterial({
             color: 0x3b82f6, metalness: 0.1, roughness: 0.1, 
             transparent: true, opacity: 0.4, clearcoat: 1.0, 
@@ -906,11 +919,8 @@
             }, 4000);
         });
 
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            animate();
-        } else {
-            window.addEventListener('DOMContentLoaded', animate);
-        }
+        // HATA DIYA GAYA HAI: Niche wala code hataya kyunki ab 3D engine loading ke baad start hoga
+        // if (document.readyState === 'complete' || document.readyState === 'interactive') { animate(); } ...
 
         // --- CUSTOM CURSOR LOGIC ---
         if (window.matchMedia("(pointer: fine)").matches) {
@@ -918,8 +928,6 @@
             const cursorRing = document.getElementById('cursor-ring');
             let mouseX = window.innerWidth / 2;
             let mouseY = window.innerHeight / 2;
-            let ringX = window.innerWidth / 2;
-            let ringY = window.innerHeight / 2;
 
             const trailCount = 15; 
             const trails = [];
@@ -930,26 +938,24 @@
                 trails.push({ element: div, x: mouseX, y: mouseY });
             }
 
+            // Real-time Instant update (Zero Delay)
             window.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
                 cursorDot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+                if (!cursorRing.classList.contains('clicked')) {
+                    cursorRing.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+                }
             });
 
             const renderCursor = () => {
-                ringX += (mouseX - ringX) * 0.15; 
-                ringY += (mouseY - ringY) * 0.15;
-                
-                if (!cursorRing.classList.contains('clicked')) {
-                    cursorRing.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%))`;
-                }
-
                 let prevX = mouseX;
                 let prevY = mouseY;
                 
                 for (let i = 0; i < trailCount; i++) {
-                    trails[i].x += (prevX - trails[i].x) * 0.4;
-                    trails[i].y += (prevY - trails[i].y) * 0.4;
+                    // Trail speed increased from 0.4 to 0.65 for tighter flash feel
+                    trails[i].x += (prevX - trails[i].x) * 0.65;
+                    trails[i].y += (prevY - trails[i].y) * 0.65;
                     
                     const scale = 1 - (i / trailCount); 
                     const opacity = 1 - (i / trailCount); 
@@ -992,10 +998,12 @@
 
             window.addEventListener('mousedown', () => {
                 cursorRing.classList.add('clicked');
-                cursorRing.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%)) scale(0.7)`;
+                // Use exact mouseX and mouseY for instant click scale
+                cursorRing.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%)) scale(0.7)`;
             });
             window.addEventListener('mouseup', () => {
                 cursorRing.classList.remove('clicked');
+                cursorRing.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
             });
         }
     </script>
