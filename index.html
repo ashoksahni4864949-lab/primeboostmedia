@@ -863,34 +863,49 @@
             targetY = (event.clientY - windowHalfY) * 0.02;
         });
 
-        // BUG FIX: iOS 13+ Gyroscope Permission Update
+        // --- ADVANCED iOS GYRO SYSTEM ---
+        let gyroEnabled = false;
+
         function handleOrientation(event) {
-            if(event.beta && event.gamma) {
-                targetX = event.gamma * 0.5; 
-                targetY = (event.beta - 45) * 0.5; 
+            // Null check is important for iOS
+            if(event.gamma !== null && event.beta !== null) {
+                let gamma = event.gamma; 
+                let beta = event.beta;
+                
+                // Keeping values stable
+                if (gamma > 90) gamma = 90;
+                if (gamma < -90) gamma = -90;
+
+                targetX = gamma * 0.5; 
+                targetY = (beta - 45) * 0.5; 
             }
         }
 
         function initGyro() {
+            if (gyroEnabled) return; // Agar on ho gaya to baar-baar nahi chalega
+            
             if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                // iOS 13+ devices need permission
+                // iOS 13+ devices need explicit permission on a user action
                 DeviceOrientationEvent.requestPermission()
                     .then(permissionState => {
                         if (permissionState === 'granted') {
-                            window.addEventListener('deviceorientation', handleOrientation);
+                            window.addEventListener('deviceorientation', handleOrientation, true);
+                            gyroEnabled = true;
                         }
                     })
-                    .catch(console.error);
+                    .catch((err) => {
+                        console.log("Gyro Error: Ensure site is running on HTTPS", err);
+                    }); 
             } else if (window.DeviceOrientationEvent) {
                 // Non-iOS 13+ devices (Android etc.)
-                window.addEventListener('deviceorientation', handleOrientation);
+                window.addEventListener('deviceorientation', handleOrientation, true);
+                gyroEnabled = true;
             }
         }
 
-        // Apple requires user interaction to enable Gyro. 
-        // Yeh user ke pehle touch/click par chupke se gyro chalu kar dega.
-        document.addEventListener('click', initGyro, { once: true });
-        document.addEventListener('touchstart', initGyro, { once: true });
+        // Attached to touchend and click for maximum iOS compatibility
+        document.body.addEventListener('click', initGyro);
+        document.body.addEventListener('touchend', initGyro);
 
         window.addEventListener('resize', () => {
             windowHalfX = window.innerWidth / 2;
