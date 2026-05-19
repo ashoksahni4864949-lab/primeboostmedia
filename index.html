@@ -586,25 +586,74 @@
     </section>
 
     <!-- Footer -->
-    <footer class="relative z-10 glass-panel border-t border-white/10 py-12 mt-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-2 group cursor-pointer">
-                <i class="fa-solid fa-meteor text-primary text-xl group-hover:rotate-45 transition-transform duration-500"></i>
-                <span class="font-bold text-xl text-white tracking-tight">Primeboost<span class="text-primary">media</span></span>
+    <footer class="relative z-10 glass-panel border-t border-white/10 pt-16 pb-8 mt-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-10 mb-12 border-b border-white/10 pb-12">
+                <!-- Brand Info -->
+                <div class="col-span-1 lg:col-span-1">
+                    <div class="flex items-center gap-2 group cursor-pointer mb-4">
+                        <i class="fa-solid fa-meteor text-primary text-2xl group-hover:rotate-45 transition-transform duration-500"></i>
+                        <span class="font-bold text-2xl text-white tracking-tight">Primeboost<span class="text-primary">media</span></span>
+                    </div>
+                    <p class="text-slate-400 text-sm font-light leading-relaxed">
+                        Elite Performance Agency specializing in Meta & Google Ads. We scale brands with data-driven strategies and premium execution.
+                    </p>
+                </div>
+                
+                <!-- Contact Cards -->
+                <div class="col-span-1 lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
+                    <!-- Phone -->
+                    <div class="glass-card p-5 rounded-2xl flex flex-col items-start gap-3 hover:-translate-y-1 transition-transform duration-300 w-full">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-primary shadow-[0_0_10px_rgba(59,130,246,0.3)] shrink-0">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div class="w-full">
+                            <h5 class="font-semibold text-xs mb-1 uppercase tracking-wider text-slate-400">Call Us</h5>
+                            <a href="tel:+917015593482" class="text-white font-medium text-sm hover:text-primary transition-colors block">+91 7015593482</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="glass-card p-5 rounded-2xl flex flex-col items-start gap-3 hover:-translate-y-1 transition-transform duration-300 w-full">
+                        <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 shadow-[0_0_10px_rgba(139,92,246,0.3)] shrink-0">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div class="w-full">
+                            <h5 class="font-semibold text-xs mb-1 uppercase tracking-wider text-slate-400">Email Us</h5>
+                            <a href="mailto:ashoksahani7082@gmail.com" class="text-white font-medium text-sm hover:text-purple-400 transition-colors inline-block break-all">ashoksahani7082@gmail.com</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Address -->
+                    <div class="glass-card p-5 rounded-2xl flex flex-col items-start gap-3 hover:-translate-y-1 transition-transform duration-300 w-full">
+                        <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shadow-[0_0_10px_rgba(34,197,94,0.3)] shrink-0">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div class="w-full">
+                            <h5 class="font-semibold text-xs mb-1 uppercase tracking-wider text-slate-400">Visit Us</h5>
+                            <p class="text-white font-medium text-sm leading-relaxed">Ward No. 5, Vikash Nagar<br>Nearby Reliance Tower<br>Ladwa, Kurukshetra<br>Haryana - 136132</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p class="text-slate-400 text-sm font-light">
-                &copy; 2024 Primeboostmedia. Elevating Brands Globally.
-            </p>
-            <div class="flex gap-4">
-                <a href="https://www.instagram.com/prime_boostmedia/" target="_blank" class="w-12 h-12 rounded-full glass-card flex items-center justify-center text-white hover:text-primary hover:-translate-y-1 transition-all">
-                    <i class="fa-brands fa-instagram text-xl"></i>
-                </a>
-                <a href="#" class="w-12 h-12 rounded-full glass-card flex items-center justify-center text-white hover:text-primary hover:-translate-y-1 transition-all">
-                    <i class="fa-brands fa-linkedin-in text-xl"></i>
-                </a>
-                <button onclick="openWaModal()" class="w-12 h-12 rounded-full glass-card flex items-center justify-center text-white hover:text-green-400 hover:-translate-y-1 transition-all">
-                    <i class="fa-brands fa-whatsapp text-xl"></i>
-                </button>
+
+            <!-- Bottom Copyright & Socials -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-slate-400 text-sm font-light text-center md:text-left">
+                    &copy; 2026 Primeboostmedia. Elevating Brands Globally.
+                </p>
+                <div class="flex gap-4">
+                    <a href="https://www.instagram.com/prime_boostmedia/" target="_blank" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-white hover:text-primary hover:-translate-y-1 transition-all">
+                        <i class="fa-brands fa-instagram text-lg"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-white hover:text-primary hover:-translate-y-1 transition-all">
+                        <i class="fa-brands fa-linkedin-in text-lg"></i>
+                    </a>
+                    <button onclick="openWaModal()" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-white hover:text-green-400 hover:-translate-y-1 transition-all">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </footer>
@@ -662,7 +711,8 @@
             const name = document.getElementById('waName').value;
             console.log("High Intent Lead Verified! Firing Conversion Pixel...");
             const message = encodeURIComponent(`Hi Primeboostmedia, I am ${name}. I would like to scale my business.`);
-            window.open(`https://wa.me/919729936623?text=${message}`, '_blank');
+            // NOTE: Updated with your correct business number
+            window.open(`https://wa.me/918558876741?text=${message}`, '_blank');
             closeWaModal();
             this.reset();
         });
@@ -677,7 +727,6 @@
             el.addEventListener('click', () => menu.classList.add('hidden'));
         });
 
-        // FIX: Removed the duplicate duplicate 'document.body.style.overflow = "hidden"' lines
         // --- PRELOADER & SCROLL REVEAL LOGIC ---
         document.body.style.overflow = 'hidden'; // Lock scroll
         
@@ -944,7 +993,7 @@
             const url = document.getElementById('contactUrl').value;
             
             const message = encodeURIComponent(`Hi Primeboostmedia, I am ${name}.\nMy Contact: ${info}\nWebsite: ${url}\n\nI would like to get a custom growth blueprint for my brand.`);
-            window.open(`https://wa.me/919729936623?text=${message}`, '_blank');
+            window.open(`https://wa.me/918558876741?text=${message}`, '_blank');
             
             const msg = document.getElementById('successMessage');
             msg.classList.remove('hidden');
@@ -954,9 +1003,6 @@
                 msg.classList.add('hidden');
             }, 4000);
         });
-
-        // HATA DIYA GAYA HAI: Niche wala code hataya kyunki ab 3D engine loading ke baad start hoga
-        // if (document.readyState === 'complete' || document.readyState === 'interactive') { animate(); } ...
 
         // --- CUSTOM CURSOR LOGIC ---
         if (window.matchMedia("(pointer: fine)").matches) {
