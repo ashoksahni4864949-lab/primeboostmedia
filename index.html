@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Primeboostmedia | Premium Meta & Google Ads Agency</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17942340522"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-17942340522');
+    </script>
+    <!-- End Google tag -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -26,6 +38,7 @@
             }
         }
     </script>
+
     <style>
         body {
             background-color: #0f172a;
@@ -559,17 +572,14 @@
                 <form class="relative z-10" id="contactForm">
                     <div class="mb-5 text-left">
                         <label class="block text-xs font-semibold tracking-wide uppercase text-slate-400 mb-2">Full Name</label>
-                        <!-- FIX: Added 'text-base sm:text-sm' to prevent iPhone auto-zoom bug -->
                         <input type="text" id="contactName" class="w-full bg-slate-900/50 border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder-white/20 text-base sm:text-sm" placeholder="John Doe" required>
                     </div>
                     <div class="mb-5 text-left">
                         <label class="block text-xs font-semibold tracking-wide uppercase text-slate-400 mb-2">Business Email / Phone</label>
-                        <!-- FIX: Added 'text-base sm:text-sm' -->
                         <input type="text" id="contactInfo" class="w-full bg-slate-900/50 border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder-white/20 text-base sm:text-sm" placeholder="contact@brand.com" required>
                     </div>
                     <div class="mb-8 text-left">
                         <label class="block text-xs font-semibold tracking-wide uppercase text-slate-400 mb-2">Website URL</label>
-                        <!-- FIX: Added 'text-base sm:text-sm' -->
                         <input type="url" id="contactUrl" class="w-full bg-slate-900/50 border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder-white/20 text-base sm:text-sm" placeholder="https://" required>
                     </div>
                     <button type="submit" class="w-full btn-premium font-semibold py-4 px-4 text-white flex items-center justify-center gap-2">
@@ -578,7 +588,7 @@
                     
                     <!-- Custom Success Message Modal/Alert -->
                     <div id="successMessage" class="hidden mt-5 p-4 bg-green-500/20 border border-green-500/50 rounded-xl text-green-400 font-medium text-sm text-center backdrop-blur-sm transition-all">
-                        <i class="fa-solid fa-circle-check mr-2"></i> Premium Inquiry Sent! Our experts will connect with you.
+                        <i class="fa-solid fa-circle-check mr-2"></i> Premium Inquiry Sent! Redirecting to WhatsApp...
                     </div>
                 </form>
             </div>
@@ -670,7 +680,6 @@
             </div>
             <p class="text-slate-400 text-sm mb-6 font-light relative z-10 leading-relaxed">Please enter your name to verify you are a human and proceed to WhatsApp.</p>
             <form id="waVerifyForm" class="relative z-10">
-                <!-- FIX: Changed text-sm to text-base sm:text-sm to prevent iPhone zoom -->
                 <input type="text" id="waName" placeholder="Enter your full name" class="w-full bg-slate-900/50 border border-white/10 rounded-xl px-5 py-4 mb-4 text-white text-base sm:text-sm focus:outline-none focus:border-green-500/50 focus:ring-1 focus:ring-green-500/50 transition-all" required>
                 <button type="submit" class="w-full bg-white/10 hover:bg-white/20 border border-white/10 text-white font-semibold py-3.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2 text-sm">
                     Open WhatsApp <i class="fa-solid fa-arrow-right"></i>
@@ -706,12 +715,25 @@
             }, 300);
         }
 
+        // Handle Modal Lead Submission + Google Tag Conversion
         document.getElementById('waVerifyForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('waName').value;
+            
+            // ---> Google Ads Event Tracking: Fire 'generate_lead' event <---
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'WhatsApp',
+                    'event_label': 'Modal Verification Lead'
+                });
+                
+                // Note: Agar Google Ads Dashboard me ek specific conversion action create kiya hai,
+                // toh waha se 'send_to' (AW-17942340522/XXXXX) idhar add karke niche wali line uncomment kar de.
+                // gtag('event', 'conversion', {'send_to': 'AW-17942340522/YOUR_CONVERSION_LABEL'});
+            }
             console.log("High Intent Lead Verified! Firing Conversion Pixel...");
+
             const message = encodeURIComponent(`Hi Primeboostmedia, I am ${name}. I would like to scale my business.`);
-            // NOTE: Updated with your correct business number
             window.open(`https://wa.me/918558876741?text=${message}`, '_blank');
             closeWaModal();
             this.reset();
@@ -856,10 +878,8 @@
         const group = new THREE.Group();
         scene.add(group);
 
-        // Restored High-Quality Geometry
         const geoDisc = new THREE.CylinderGeometry(1, 1, 0.05, 64); 
 
-        // Restored Ultra-Premium Real Glass Material
         const matGlassBlue = new THREE.MeshPhysicalMaterial({
             color: 0x3b82f6, metalness: 0.1, roughness: 0.1, 
             transparent: true, opacity: 0.4, clearcoat: 1.0, 
@@ -985,13 +1005,25 @@
             renderer.render(scene, camera);
         }
 
-        // --- FORM SUBMISSION HANDLER ---
+        // --- FORM SUBMISSION HANDLER (WITH GOOGLE TAG) ---
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('contactName').value;
             const info = document.getElementById('contactInfo').value;
             const url = document.getElementById('contactUrl').value;
             
+            // ---> Google Ads Event Tracking: Fire 'generate_lead' event <---
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'WhatsApp',
+                    'event_label': 'Main Form Lead'
+                });
+                
+                // Note: Agar Google Ads Dashboard me ek specific conversion action create kiya hai,
+                // toh waha se 'send_to' (AW-17942340522/XXXXX) idhar add karke niche wali line uncomment kar de.
+                // gtag('event', 'conversion', {'send_to': 'AW-17942340522/YOUR_CONVERSION_LABEL'});
+            }
+
             const message = encodeURIComponent(`Hi Primeboostmedia, I am ${name}.\nMy Contact: ${info}\nWebsite: ${url}\n\nI would like to get a custom growth blueprint for my brand.`);
             window.open(`https://wa.me/918558876741?text=${message}`, '_blank');
             
