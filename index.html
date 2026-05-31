@@ -715,28 +715,40 @@
             }, 300);
         }
 
-        // Handle Modal Lead Submission + Google Tag Conversion
+        // Handle Modal Lead Submission + Google Tag Conversion (Anti-Spam Added)
+        let isWaSubmitting = false;
         document.getElementById('waVerifyForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            if (isWaSubmitting) return; // Prevent multiple rapid clicks
+            isWaSubmitting = true;
+
             const name = document.getElementById('waName').value;
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
             
-            // ---> Google Ads Event Tracking: Fire 'generate_lead' event <---
+            // Disable button visually
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Connecting... <i class="fa-solid fa-spinner fa-spin ml-2"></i>';
+            
+            // ---> Google Ads Event Tracking: Fire 'conversion' event EXACTLY ONCE <---
             if (typeof gtag === 'function') {
-                gtag('event', 'generate_lead', {
-                    'event_category': 'WhatsApp',
-                    'event_label': 'Modal Verification Lead'
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-17942340522' 
                 });
-                
-                // Note: Agar Google Ads Dashboard me ek specific conversion action create kiya hai,
-                // toh waha se 'send_to' (AW-17942340522/XXXXX) idhar add karke niche wali line uncomment kar de.
-                // gtag('event', 'conversion', {'send_to': 'AW-17942340522/YOUR_CONVERSION_LABEL'});
             }
-            console.log("High Intent Lead Verified! Firing Conversion Pixel...");
+            console.log("Conversion Pixel Fired Once!");
 
             const message = encodeURIComponent(`Hi Primeboostmedia, I am ${name}. I would like to scale my business.`);
-            window.open(`https://wa.me/918558876741?text=${message}`, '_blank');
-            closeWaModal();
-            this.reset();
+            
+            // Short delay to ensure tracking fires properly before redirect
+            setTimeout(() => {
+                window.open(`https://wa.me/918558876741?text=${message}`, '_blank');
+                closeWaModal();
+                this.reset();
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                isWaSubmitting = false;
+            }, 500);
         });
 
         // --- 1. Mobile Menu Toggle (BUG FIXED) ---
@@ -1005,35 +1017,48 @@
             renderer.render(scene, camera);
         }
 
-        // --- FORM SUBMISSION HANDLER (WITH GOOGLE TAG) ---
+        // --- FORM SUBMISSION HANDLER (WITH GOOGLE TAG & Anti-Spam) ---
+        let isContactSubmitting = false;
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            if (isContactSubmitting) return; // Prevent multiple rapid clicks
+            isContactSubmitting = true;
+
             const name = document.getElementById('contactName').value;
             const info = document.getElementById('contactInfo').value;
             const url = document.getElementById('contactUrl').value;
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
             
-            // ---> Google Ads Event Tracking: Fire 'generate_lead' event <---
+            // Disable button visually
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xl mr-2"></i> Processing...';
+
+            // ---> Google Ads Event Tracking: Fire 'conversion' event EXACTLY ONCE <---
             if (typeof gtag === 'function') {
-                gtag('event', 'generate_lead', {
-                    'event_category': 'WhatsApp',
-                    'event_label': 'Main Form Lead'
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-17942340522' 
                 });
-                
-                // Note: Agar Google Ads Dashboard me ek specific conversion action create kiya hai,
-                // toh waha se 'send_to' (AW-17942340522/XXXXX) idhar add karke niche wali line uncomment kar de.
-                // gtag('event', 'conversion', {'send_to': 'AW-17942340522/YOUR_CONVERSION_LABEL'});
             }
 
             const message = encodeURIComponent(`Hi Primeboostmedia, I am ${name}.\nMy Contact: ${info}\nWebsite: ${url}\n\nI would like to get a custom growth blueprint for my brand.`);
-            window.open(`https://wa.me/918558876741?text=${message}`, '_blank');
             
-            const msg = document.getElementById('successMessage');
-            msg.classList.remove('hidden');
-            this.reset();
-            
+            // Short delay to ensure tracking fires properly before redirect
             setTimeout(() => {
-                msg.classList.add('hidden');
-            }, 4000);
+                window.open(`https://wa.me/918558876741?text=${message}`, '_blank');
+                
+                const msg = document.getElementById('successMessage');
+                msg.classList.remove('hidden');
+                this.reset();
+                
+                // Re-enable after 4 seconds
+                setTimeout(() => {
+                    msg.classList.add('hidden');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    isContactSubmitting = false;
+                }, 4000);
+            }, 500);
         });
 
         // --- CUSTOM CURSOR LOGIC ---
