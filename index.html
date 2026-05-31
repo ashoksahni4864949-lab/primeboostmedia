@@ -235,7 +235,14 @@
             justify-content: center;
             transition: opacity 0.6s ease, transform 1s cubic-bezier(0.8, 0, 0.2, 1), filter 0.6s ease;
             overflow: hidden;
+            /* FIX: CSS Failsafe to force hide loader in Gemini Preview if JS is blocked */
+            animation: forceHideLoader 0.5s ease-in 2.5s forwards; 
         }
+
+        @keyframes forceHideLoader {
+            100% { opacity: 0; pointer-events: none; transform: scale(3); filter: blur(20px); visibility: hidden; }
+        }
+
         #preloader::before {
             content: '';
             position: absolute;
@@ -250,6 +257,7 @@
             pointer-events: none; 
             transform: scale(6); 
             filter: blur(30px);
+            visibility: hidden;
         }
         
         /* 8K Glowing Orb Structure */
@@ -761,8 +769,8 @@
             el.addEventListener('click', () => menu.classList.add('hidden'));
         });
 
-        // --- PRELOADER & SCROLL REVEAL LOGIC ---
-        document.body.style.overflow = 'hidden'; // Lock scroll
+        // --- PRELOADER & SCROLL REVEAL LOGIC (BUG FIXED: STUCK LOADING) ---
+        // FIX: Removed strict document.body.style.overflow = 'hidden' to prevent scroll lock in preview
         
         const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-scale');
         const revealObserver = new IntersectionObserver(function(entries, observer) {
@@ -775,16 +783,18 @@
         }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
         let is3DActive = false; // 3D Sleep Mode Flag
+        let isLoaded = false;   // Preloader Flag
 
         // Cinematic 60FPS Preloader Animation
-        window.addEventListener('load', () => {
+        function initSiteLoading() {
+            if (isLoaded) return;
+            
             const preloader = document.getElementById('preloader');
             const barFill = document.getElementById('loader-bar-fill');
             const percentageText = document.getElementById('loader-percentage-text');
             
             let startTime = null;
             const duration = 1200; // Fast 1.2s
-            
             const easeOutQuart = (t) => 1 - (--t) * t * t * t;
 
             const updateLoader = (timestamp) => {
@@ -796,31 +806,55 @@
 
                 const easedProgress = easeOutQuart(progress) * 100;
 
-                barFill.style.width = `${easedProgress}%`;
-                percentageText.innerText = Math.floor(easedProgress);
+                if(barFill) barFill.style.width = `${easedProgress}%`;
+                if(percentageText) percentageText.innerText = Math.floor(easedProgress);
 
                 if (progress < 1) {
                     requestAnimationFrame(updateLoader);
                 } else {
-                    setTimeout(() => {
-                        preloader.classList.add('loaded');
-                        document.body.style.overflow = ''; // Release scroll
-                        
-                        // Wake up 3D Engine right as preloader fades out
-                        if (!is3DActive) {
-                            is3DActive = true;
-                            animate(); 
-                        }
-
-                        setTimeout(() => {
-                            revealElements.forEach(el => revealObserver.observe(el));
-                        }, 300); 
-                    }, 100);
+                    completeLoading();
                 }
             };
-
             requestAnimationFrame(updateLoader);
-        });
+        }
+
+        // Logic to remove loading screen safely
+        function completeLoading() {
+            if (isLoaded) return;
+            isLoaded = true;
+            
+            const preloader = document.getElementById('preloader');
+            if(preloader) preloader.classList.add('loaded');
+            
+            // Wake up 3D Engine right as preloader fades out
+            if (!is3DActive) {
+                is3DActive = true;
+                try { 
+                    if(typeof animate === 'function') animate(); 
+                } catch(e) {
+                    console.warn("3D Engine skipped.", e);
+                }
+            }
+
+            setTimeout(() => {
+                revealElements.forEach(el => revealObserver.observe(el));
+            }, 300); 
+        }
+
+        // FIX: Start loading instantly without waiting for external trackers (Prevents infinite loading)
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSiteLoading);
+        } else {
+            initSiteLoading();
+        }
+
+        // ULTIMATE FAILSAFE: If something hangs the browser, force unlock site after 3 seconds
+        setTimeout(() => {
+            if(!isLoaded) {
+                console.warn("Failsafe Triggered: Forcing site unlock");
+                completeLoading();
+            }
+        }, 3000);
 
         // Stat Counter Logic
         const counters = document.querySelectorAll('.stat-counter');
@@ -837,7 +871,8 @@
                     const updateCount = () => {
                         current += step;
                         if(current < target) {
-                            counter.innerText = Math.ceil(current);
+                            // FIX: Changed Math.ceil to Math.round for smoother counting animation
+                            counter.innerText = Math.round(current);
                             requestAnimationFrame(updateCount);
                         } else {
                             counter.innerText = target;
@@ -861,76 +896,83 @@
             }
         });
 
-        // --- 4. THREE.JS 3D BACKGROUND & GYRO SYSTEM ---
+        // --- 4. THREE.JS 3D BACKGROUND & GYRO SYSTEM (BUG FIXED: CRASH HANDLER ADDED) ---
         const container = document.getElementById('canvas-container');
+        let scene, camera, renderer, group, clock;
         
-        const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x0f172a, 0.015);
+        try {
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x0f172a, 0.015);
 
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 30;
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
 
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        // FIX: Force 1x pixel ratio on mobile for ultra-smooth rendering, 1.5x max on desktop
-        renderer.setPixelRatio(window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio, 1.5)); 
-        container.appendChild(renderer.domElement);
-
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
-        
-        const pointLight1 = new THREE.PointLight(0x3b82f6, 1.5, 100);
-        pointLight1.position.set(20, 20, 20);
-        scene.add(pointLight1);
-        
-        const pointLight2 = new THREE.PointLight(0x8b5cf6, 1.5, 100);
-        pointLight2.position.set(-20, -20, 20);
-        scene.add(pointLight2);
-
-        const group = new THREE.Group();
-        scene.add(group);
-
-        const geoDisc = new THREE.CylinderGeometry(1, 1, 0.05, 64); 
-
-        const matGlassBlue = new THREE.MeshPhysicalMaterial({
-            color: 0x3b82f6, metalness: 0.1, roughness: 0.1, 
-            transparent: true, opacity: 0.4, clearcoat: 1.0, 
-            transmission: 0.8, thickness: 0.5
-        });
-        const matGlassPurple = new THREE.MeshPhysicalMaterial({
-            color: 0x8b5cf6, metalness: 0.1, roughness: 0.1, 
-            transparent: true, opacity: 0.4, clearcoat: 1.0,
-            transmission: 0.8, thickness: 0.5
-        });
-        const matGlassDark = new THREE.MeshPhysicalMaterial({
-            color: 0x1e293b, metalness: 0.5, roughness: 0.2,
-            transparent: true, opacity: 0.5, clearcoat: 1.0
-        });
-
-        const materials = [matGlassBlue, matGlassPurple, matGlassDark];
-        for (let i = 0; i < 5; i++) {
-            const mat = materials[Math.floor(Math.random() * materials.length)];
-            const mesh = new THREE.Mesh(geoDisc, mat);
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
             
-            mesh.position.x = (Math.random() - 0.5) * 40;
-            mesh.position.y = (Math.random() - 0.5) * 40;
-            mesh.position.z = (Math.random() - 0.5) * 20 - 5;
+            // FIX: Fallback applied (|| 1) in case devicePixelRatio is undefined on older browsers
+            renderer.setPixelRatio(window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio || 1, 1.5)); 
+            container.appendChild(renderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
             
-            mesh.rotation.x = Math.random() * Math.PI;
-            mesh.rotation.y = Math.random() * Math.PI;
-            mesh.rotation.z = Math.random() * Math.PI;
+            const pointLight1 = new THREE.PointLight(0x3b82f6, 1.5, 100);
+            pointLight1.position.set(20, 20, 20);
+            scene.add(pointLight1);
             
-            const scale = Math.random() * 6.0 + 5.0; 
-            mesh.scale.set(scale, scale, scale);
+            const pointLight2 = new THREE.PointLight(0x8b5cf6, 1.5, 100);
+            pointLight2.position.set(-20, -20, 20);
+            scene.add(pointLight2);
+
+            group = new THREE.Group();
+            scene.add(group);
+
+            const geoDisc = new THREE.CylinderGeometry(1, 1, 0.05, 64); 
+
+            // Optimized MeshStandardMaterial
+            const matGlassBlue = new THREE.MeshStandardMaterial({
+                color: 0x3b82f6, metalness: 0.5, roughness: 0.2, 
+                transparent: true, opacity: 0.6
+            });
+            const matGlassPurple = new THREE.MeshStandardMaterial({
+                color: 0x8b5cf6, metalness: 0.5, roughness: 0.2, 
+                transparent: true, opacity: 0.6
+            });
+            const matGlassDark = new THREE.MeshStandardMaterial({
+                color: 0x1e293b, metalness: 0.7, roughness: 0.3,
+                transparent: true, opacity: 0.8
+            });
+
+            const materials = [matGlassBlue, matGlassPurple, matGlassDark];
+            for (let i = 0; i < 5; i++) {
+                const mat = materials[Math.floor(Math.random() * materials.length)];
+                const mesh = new THREE.Mesh(geoDisc, mat);
+                
+                mesh.position.x = (Math.random() - 0.5) * 40;
+                mesh.position.y = (Math.random() - 0.5) * 40;
+                mesh.position.z = (Math.random() - 0.5) * 20 - 5;
+                
+                mesh.rotation.x = Math.random() * Math.PI;
+                mesh.rotation.y = Math.random() * Math.PI;
+                mesh.rotation.z = Math.random() * Math.PI;
+                
+                const scale = Math.random() * 6.0 + 5.0; 
+                mesh.scale.set(scale, scale, scale);
+                
+                mesh.userData = {
+                    yOffset: Math.random() * Math.PI * 2,
+                    yLimit: Math.random() * 0.03 + 0.01,
+                    rotSpeedX: (Math.random() - 0.5) * 0.01,
+                    rotSpeedY: (Math.random() - 0.5) * 0.01
+                };
+                
+                group.add(mesh);
+            }
             
-            mesh.userData = {
-                yOffset: Math.random() * Math.PI * 2,
-                yLimit: Math.random() * 0.03 + 0.01,
-                rotSpeedX: (Math.random() - 0.5) * 0.01,
-                rotSpeedY: (Math.random() - 0.5) * 0.01
-            };
-            
-            group.add(mesh);
+            clock = new THREE.Clock();
+        } catch(error) {
+            console.error("WebGL 3D engine failed to load due to device limitations. Fallback to basic UI mode.", error);
         }
 
         // --- GYRO & MOUSE PARALLAX SYSTEM ---
@@ -989,6 +1031,7 @@
         document.body.addEventListener('touchend', initGyro);
 
         window.addEventListener('resize', () => {
+            if(!camera || !renderer) return; // FIX: Crash prevention if 3D failed
             windowHalfX = window.innerWidth / 2;
             windowHalfY = window.innerHeight / 2;
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -996,9 +1039,9 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        const clock = new THREE.Clock();
-        
         function animate() {
+            if(!renderer || !scene || !camera || !group || !clock) return; // FIX: Added !clock check to prevent preview crash
+
             requestAnimationFrame(animate);
             const time = clock.getElapsedTime();
 
