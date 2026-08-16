@@ -21,6 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Three.js for 3D Background -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
     <script>
         tailwind.config = {
             theme: {
@@ -177,7 +178,7 @@
                 pointer-events: none;
                 z-index: 9999999; 
                 mix-blend-mode: difference; 
-                transition: width 0.1s, height 0.1s; /* Ultra fast transition */
+                transition: width 0.1s, height 0.1s; 
             }
             #cursor-ring {
                 position: fixed;
@@ -390,16 +391,33 @@
             <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer group">
                     <i class="fa-solid fa-meteor text-primary text-2xl group-hover:rotate-12 transition-transform"></i>
-                    <span class="font-bold text-2xl tracking-tight text-white">Primeboost<span class="text-primary">media</span></span>
+                    <span class="font-bold text-xl lg:text-2xl tracking-tight text-white">Primeboost<span class="text-primary">media</span></span>
                 </div>
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#home" class="hover:text-primary transition-colors px-3 py-2 text-sm font-medium">Home</a>
-                        <a href="#about" class="hover:text-primary transition-colors px-3 py-2 text-sm font-medium">About</a>
-                        <a href="#services" class="hover:text-primary transition-colors px-3 py-2 text-sm font-medium">Services</a>
-                        <button onclick="openWaModal()" class="relative inline-flex items-center justify-center px-6 py-2.5 overflow-hidden font-medium text-white bg-primary rounded-full group shadow-[0_0_15px_rgba(59,130,246,0.5)] hover:shadow-[0_0_25px_rgba(59,130,246,0.8)] transition-all">
+                    <div class="ml-4 lg:ml-10 flex items-center space-x-4 lg:space-x-6">
+                        <a href="#home" class="hover:text-primary transition-colors px-2 lg:px-3 py-2 text-xs lg:text-sm font-medium">Home</a>
+                        <a href="#about" class="hover:text-primary transition-colors px-2 lg:px-3 py-2 text-xs lg:text-sm font-medium">About</a>
+                        <a href="#services" class="hover:text-primary transition-colors px-2 lg:px-3 py-2 text-xs lg:text-sm font-medium">Services</a>
+                        
+                        <!-- NEW: ATTRACTIVE WHATSAPP API LOGIN BUTTON (DESKTOP) -->
+                        <a href="https://automate.makemyapi.in/login" target="_blank" class="group relative inline-flex items-center justify-center px-4 py-2 lg:px-6 lg:py-2.5 overflow-hidden font-bold text-white bg-slate-900 border border-green-500/50 rounded-full shadow-[0_0_15px_rgba(34,197,94,0.2)] hover:shadow-[0_0_25px_rgba(34,197,94,0.5)] hover:border-green-400 transition-all duration-300 whitespace-nowrap">
+                            <!-- Background Glow Effect on Hover -->
+                            <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-green-600/10 via-green-400/20 to-green-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></span>
+                            
+                            <!-- WhatsApp Icon with its own soft glow -->
+                            <div class="relative flex items-center justify-center w-5 h-5 lg:w-6 lg:h-6 mr-2 bg-gradient-to-br from-green-400 to-green-600 rounded-full shadow-[0_0_10px_rgba(34,197,94,0.8)] group-hover:scale-110 transition-transform duration-300">
+                                <i class="fa-brands fa-whatsapp text-white text-xs lg:text-sm"></i>
+                            </div>
+                            
+                            <!-- Button Text -->
+                            <span class="relative tracking-wide text-xs lg:text-sm drop-shadow-md">
+                                WhatsApp <span class="text-green-400 group-hover:text-green-300 transition-colors">API Login</span>
+                            </span>
+                        </a>
+
+                        <button onclick="openWaModal()" class="relative inline-flex items-center justify-center px-4 py-2 lg:px-6 lg:py-2.5 overflow-hidden font-medium text-white bg-primary rounded-full group shadow-[0_0_15px_rgba(59,130,246,0.5)] hover:shadow-[0_0_25px_rgba(59,130,246,0.8)] transition-all whitespace-nowrap">
                             <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-10"></span>
-                            <span class="relative flex items-center"><i class="fa-brands fa-whatsapp mr-2 text-green-400 group-hover:text-white transition-colors text-lg"></i>Let's Connect</span>
+                            <span class="relative flex items-center text-xs lg:text-sm"><i class="fa-brands fa-whatsapp mr-2 text-green-400 group-hover:text-white transition-colors text-sm lg:text-lg"></i>Let's Connect</span>
                         </button>
                     </div>
                 </div>
@@ -411,13 +429,23 @@
                 </div>
             </div>
         </div>
+        
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-white/10">
             <div class="px-4 pt-2 pb-4 space-y-2">
                 <a href="#home" class="block hover:bg-white/10 text-white px-3 py-2 rounded-lg text-base font-medium">Home</a>
                 <a href="#about" class="block hover:bg-white/10 text-white px-3 py-2 rounded-lg text-base font-medium">About</a>
                 <a href="#services" class="block hover:bg-white/10 text-white px-3 py-2 rounded-lg text-base font-medium">Services</a>
-                <button onclick="openWaModal()" class="w-full text-left text-primary font-bold px-3 py-2 text-base flex items-center"><i class="fa-brands fa-whatsapp mr-2 text-green-400 text-lg"></i>Let's Connect</button>
+                
+                <!-- NEW: ATTRACTIVE WHATSAPP API LOGIN BUTTON (MOBILE) -->
+                <a href="https://automate.makemyapi.in/login" target="_blank" class="block w-full bg-slate-900 border border-green-500/50 hover:bg-slate-800 px-3 py-3 rounded-xl text-base font-semibold text-white flex items-center justify-center transition-all shadow-[0_4px_15px_rgba(34,197,94,0.15)]">
+                    <div class="flex items-center justify-center w-6 h-6 mr-3 bg-gradient-to-br from-green-400 to-green-600 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.6)]">
+                        <i class="fa-brands fa-whatsapp text-white text-sm"></i>
+                    </div>
+                    WhatsApp <span class="text-green-400 ml-1">API Login</span>
+                </a>
+
+                <button onclick="openWaModal()" class="w-full text-left text-primary font-bold px-3 py-2 mt-2 text-base flex items-center justify-center"><i class="fa-solid fa-bolt mr-2 text-primary text-lg"></i>Let's Connect</button>
             </div>
         </div>
     </nav>
@@ -700,7 +728,7 @@
     <script>
         // --- High-Intent WhatsApp Modal Logic ---
         function openWaModal() {
-            document.body.style.overflow = 'hidden'; // FIX: Background scroll lock jab modal open ho
+            document.body.style.overflow = 'hidden'; 
             const modal = document.getElementById('waModal');
             const content = document.getElementById('waModalContent');
             modal.classList.remove('hidden');
@@ -712,7 +740,7 @@
         }
 
         function closeWaModal() {
-            document.body.style.overflow = ''; // FIX: Scroll wapas open karna jab modal close ho
+            document.body.style.overflow = ''; 
             const modal = document.getElementById('waModal');
             const content = document.getElementById('waModalContent');
             modal.classList.add('opacity-0');
@@ -723,32 +751,28 @@
             }, 300);
         }
 
-        // Handle Modal Lead Submission + Google Tag Conversion (Anti-Spam Added)
+        // Handle Modal Lead Submission + Google Tag Conversion 
         let isWaSubmitting = false;
         document.getElementById('waVerifyForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (isWaSubmitting) return; // Prevent multiple rapid clicks
+            if (isWaSubmitting) return; 
             isWaSubmitting = true;
 
             const name = document.getElementById('waName').value;
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             
-            // Disable button visually
             submitBtn.disabled = true;
             submitBtn.innerHTML = 'Connecting... <i class="fa-solid fa-spinner fa-spin ml-2"></i>';
             
-            // ---> Google Ads Event Tracking: Fire 'conversion' event EXACTLY ONCE <---
             if (typeof gtag === 'function') {
                 gtag('event', 'conversion', {
                     'send_to': 'AW-17942340522' 
                 });
             }
-            console.log("Conversion Pixel Fired Once!");
-
+            
             const message = encodeURIComponent(`Hi Primeboostmedia, I am ${name}. I would like to scale my business.`);
             
-            // Short delay to ensure tracking fires properly before redirect
             setTimeout(() => {
                 window.open(`https://wa.me/918053083324?text=${message}`, '_blank');
                 closeWaModal();
@@ -759,19 +783,16 @@
             }, 500);
         });
 
-        // --- 1. Mobile Menu Toggle (BUG FIXED) ---
+        // --- 1. Mobile Menu Toggle ---
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
         btn.addEventListener('click', () => menu.classList.toggle('hidden'));
         
-        // Fix: Select both 'a' tags and 'button' so the menu closes on ANY click
         menu.querySelectorAll('a, button').forEach(el => {
             el.addEventListener('click', () => menu.classList.add('hidden'));
         });
 
-        // --- PRELOADER & SCROLL REVEAL LOGIC (BUG FIXED: STUCK LOADING) ---
-        // FIX: Removed strict document.body.style.overflow = 'hidden' to prevent scroll lock in preview
-        
+        // --- PRELOADER & SCROLL REVEAL LOGIC ---
         const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-scale');
         const revealObserver = new IntersectionObserver(function(entries, observer) {
             entries.forEach(entry => {
@@ -782,19 +803,17 @@
             });
         }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-        let is3DActive = false; // 3D Sleep Mode Flag
-        let isLoaded = false;   // Preloader Flag
+        let is3DActive = false; 
+        let isLoaded = false;   
 
-        // Cinematic 60FPS Preloader Animation
         function initSiteLoading() {
             if (isLoaded) return;
             
-            const preloader = document.getElementById('preloader');
             const barFill = document.getElementById('loader-bar-fill');
             const percentageText = document.getElementById('loader-percentage-text');
             
             let startTime = null;
-            const duration = 1200; // Fast 1.2s
+            const duration = 1200; 
             const easeOutQuart = (t) => 1 - (--t) * t * t * t;
 
             const updateLoader = (timestamp) => {
@@ -818,7 +837,6 @@
             requestAnimationFrame(updateLoader);
         }
 
-        // Logic to remove loading screen safely
         function completeLoading() {
             if (isLoaded) return;
             isLoaded = true;
@@ -826,7 +844,6 @@
             const preloader = document.getElementById('preloader');
             if(preloader) preloader.classList.add('loaded');
             
-            // Wake up 3D Engine right as preloader fades out
             if (!is3DActive) {
                 is3DActive = true;
                 try { 
@@ -841,14 +858,13 @@
             }, 300); 
         }
 
-        // FIX: Start loading instantly without waiting for external trackers (Prevents infinite loading)
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initSiteLoading);
         } else {
             initSiteLoading();
         }
 
-        // ULTIMATE FAILSAFE: If something hangs the browser, force unlock site after 3 seconds
+        // ULTIMATE FAILSAFE
         setTimeout(() => {
             if(!isLoaded) {
                 console.warn("Failsafe Triggered: Forcing site unlock");
@@ -871,7 +887,6 @@
                     const updateCount = () => {
                         current += step;
                         if(current < target) {
-                            // FIX: Changed Math.ceil to Math.round for smoother counting animation
                             counter.innerText = Math.round(current);
                             requestAnimationFrame(updateCount);
                         } else {
@@ -886,7 +901,7 @@
         const statsSec = document.getElementById('stats-section');
         if(statsSec) statObserver.observe(statsSec);
 
-        // --- 3. Dynamic Navbar Background ---
+        // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -896,7 +911,7 @@
             }
         });
 
-        // --- 4. THREE.JS 3D BACKGROUND & GYRO SYSTEM (BUG FIXED: CRASH HANDLER ADDED) ---
+        // --- 4. THREE.JS 3D BACKGROUND ---
         const container = document.getElementById('canvas-container');
         let scene, camera, renderer, group, clock;
         
@@ -909,8 +924,6 @@
 
             renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
-            
-            // FIX: Fallback applied (|| 1) in case devicePixelRatio is undefined on older browsers
             renderer.setPixelRatio(window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio || 1, 1.5)); 
             container.appendChild(renderer.domElement);
 
@@ -930,7 +943,6 @@
 
             const geoDisc = new THREE.CylinderGeometry(1, 1, 0.05, 64); 
 
-            // Optimized MeshStandardMaterial
             const matGlassBlue = new THREE.MeshStandardMaterial({
                 color: 0x3b82f6, metalness: 0.5, roughness: 0.2, 
                 transparent: true, opacity: 0.6
@@ -972,10 +984,9 @@
             
             clock = new THREE.Clock();
         } catch(error) {
-            console.error("WebGL 3D engine failed to load due to device limitations. Fallback to basic UI mode.", error);
+            console.error("WebGL 3D engine failed to load", error);
         }
 
-        // --- GYRO & MOUSE PARALLAX SYSTEM ---
         let targetX = 0;
         let targetY = 0;
         let windowHalfX = window.innerWidth / 2;
@@ -986,16 +997,14 @@
             targetY = (event.clientY - windowHalfY) * 0.02;
         });
 
-        // --- ADVANCED iOS GYRO SYSTEM ---
+        // Gyro System
         let gyroEnabled = false;
 
         function handleOrientation(event) {
-            // Null check is important for iOS
             if(event.gamma !== null && event.beta !== null) {
                 let gamma = event.gamma; 
                 let beta = event.beta;
                 
-                // Keeping values stable
                 if (gamma > 90) gamma = 90;
                 if (gamma < -90) gamma = -90;
 
@@ -1005,10 +1014,9 @@
         }
 
         function initGyro() {
-            if (gyroEnabled) return; // Agar on ho gaya to baar-baar nahi chalega
+            if (gyroEnabled) return; 
             
             if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                // iOS 13+ devices need explicit permission on a user action
                 DeviceOrientationEvent.requestPermission()
                     .then(permissionState => {
                         if (permissionState === 'granted') {
@@ -1017,21 +1025,19 @@
                         }
                     })
                     .catch((err) => {
-                        console.log("Gyro Error: Ensure site is running on HTTPS", err);
+                        console.log("Gyro Error", err);
                     }); 
             } else if (window.DeviceOrientationEvent) {
-                // Non-iOS 13+ devices (Android etc.)
                 window.addEventListener('deviceorientation', handleOrientation, true);
                 gyroEnabled = true;
             }
         }
 
-        // Attached to touchend and click for maximum iOS compatibility
         document.body.addEventListener('click', initGyro);
         document.body.addEventListener('touchend', initGyro);
 
         window.addEventListener('resize', () => {
-            if(!camera || !renderer) return; // FIX: Crash prevention if 3D failed
+            if(!camera || !renderer) return; 
             windowHalfX = window.innerWidth / 2;
             windowHalfY = window.innerHeight / 2;
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -1040,7 +1046,7 @@
         });
 
         function animate() {
-            if(!renderer || !scene || !camera || !group || !clock) return; // FIX: Added !clock check to prevent preview crash
+            if(!renderer || !scene || !camera || !group || !clock) return; 
 
             requestAnimationFrame(animate);
             const time = clock.getElapsedTime();
@@ -1060,11 +1066,11 @@
             renderer.render(scene, camera);
         }
 
-        // --- FORM SUBMISSION HANDLER (WITH GOOGLE TAG & Anti-Spam) ---
+        // Contact Form
         let isContactSubmitting = false;
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (isContactSubmitting) return; // Prevent multiple rapid clicks
+            if (isContactSubmitting) return; 
             isContactSubmitting = true;
 
             const name = document.getElementById('contactName').value;
@@ -1073,11 +1079,9 @@
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             
-            // Disable button visually
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xl mr-2"></i> Processing...';
 
-            // ---> Google Ads Event Tracking: Fire 'conversion' event EXACTLY ONCE <---
             if (typeof gtag === 'function') {
                 gtag('event', 'conversion', {
                     'send_to': 'AW-17942340522' 
@@ -1086,7 +1090,6 @@
 
             const message = encodeURIComponent(`Hi Primeboostmedia, I am ${name}.\nMy Contact: ${info}\nWebsite: ${url}\n\nI would like to get a custom growth blueprint for my brand.`);
             
-            // Short delay to ensure tracking fires properly before redirect
             setTimeout(() => {
                 window.open(`https://wa.me/918053083324?text=${message}`, '_blank');
                 
@@ -1094,7 +1097,6 @@
                 msg.classList.remove('hidden');
                 this.reset();
                 
-                // Re-enable after 4 seconds
                 setTimeout(() => {
                     msg.classList.add('hidden');
                     submitBtn.disabled = false;
@@ -1104,7 +1106,7 @@
             }, 500);
         });
 
-        // --- CUSTOM CURSOR LOGIC ---
+        // Custom Cursor
         if (window.matchMedia("(pointer: fine)").matches) {
             const cursorDot = document.getElementById('cursor-dot');
             const cursorRing = document.getElementById('cursor-ring');
@@ -1120,7 +1122,6 @@
                 trails.push({ element: div, x: mouseX, y: mouseY });
             }
 
-            // Real-time Instant update (Zero Delay)
             window.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
@@ -1135,7 +1136,6 @@
                 let prevY = mouseY;
                 
                 for (let i = 0; i < trailCount; i++) {
-                    // Trail speed increased from 0.4 to 0.65 for tighter flash feel
                     trails[i].x += (prevX - trails[i].x) * 0.65;
                     trails[i].y += (prevY - trails[i].y) * 0.65;
                     
@@ -1180,7 +1180,6 @@
 
             window.addEventListener('mousedown', () => {
                 cursorRing.classList.add('clicked');
-                // Use exact mouseX and mouseY for instant click scale
                 cursorRing.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%)) scale(0.7)`;
             });
             window.addEventListener('mouseup', () => {
